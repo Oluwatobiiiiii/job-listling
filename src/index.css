@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  ---LightGrayishCyanBackground--: hsl(180, 52%, 96%);
+  ---LightGrayishCyanFilterTablets--: hsl(180, 31%, 95%);
+  ---DarkGrayishCyan--: hsl(180, 8%, 52%);
+  ---VeryDarkGrayishCyan--: hsl(180, 14%, 20%);
+  ---DesaturatedDarkCyan--: hsl(180, 29%, 50%);
+}
+
+body {
+  background-color: var(---LightGrayishCyanBackground--);
+  font-size: 15px;
+  font-family: "League Spartan", sans-serif;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.header-box {
+  background-color: var(---DesaturatedDarkCyan--);
+  background-image: url(/images/bg-header-desktop.svg);
+  height: 150px;
+}
+
+.jobs {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.company {
+  width: 800px;
+  height: 150px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.extra {
+  border-left: 5px solid var(---DesaturatedDarkCyan--);
+  border-radius: 10px;
+}
+
+.job-details {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-right: 30px;
+}
+
+.more-details {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 1px;
+}
+
+.job-req {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  list-style: none;
+}
+
+.technology {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+}
+
+.technology-btn {
+  background-color: var(---LightGrayishCyanBackground--);
+  color: var(---DesaturatedDarkCyan--);
+  border: none;
+  height: 30px;
+  width: 70px;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tool-btn {
+  background-color: var(---LightGrayishCyanBackground--);
+  color: var(---DesaturatedDarkCyan--);
+  border: none;
+  height: 30px;
+  width: 70px;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.company-name {
+  color: var(---DesaturatedDarkCyan--);
+  font-weight: 500;
+}
+
+.new {
+  width: 50px;
+  height: 20px;
+  text-align: center;
+  background-color: var(---DesaturatedDarkCyan--);
+  color: white;
+  border-radius: 30px;
+  padding: 3px 3px 3px 3px;
+}
+
+.featured {
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  background-color: black;
+  color: white;
+  border-radius: 30px;
+  padding: 8px 8px 8px 11px;
+}
