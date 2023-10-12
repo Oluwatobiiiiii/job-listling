@@ -1,38 +1,102 @@
-import { Children } from "react";
+import { useState } from "react";
 import jobList from "./data.json";
 import "./index.css";
 
+let selectedJobs = [];
+
 export default function App() {
+  const [selected, showSelectedJobs] = useState(selectedJobs);
+
+  // ADD THE SELCTED FILTER TO THE ARRAY
+  function addToSelectedJobs(selected) {
+    showSelectedJobs(selectedJobs.push(selected));
+    console.log(selectedJobs);
+  }
+
+  //remove the selected Job
+  function removeTheSelectedJobs(selected) {
+    showSelectedJobs(selectedJobs.pop(selected));
+    console.log(selectedJobs);
+  }
+
+  //REMOVE THE SELECTED FILTER TO THE ARRAY
+  function ClearSelected() {
+    showSelectedJobs((selectedJobs = []));
+    console.log(selectedJobs);
+  }
+
   return (
     <div>
-      <Box />
+      <Jobs addToSelectedJobs={addToSelectedJobs} selected={selected} />
 
-      <Jobs />
-
-      {/* <JobList /> */}
-
-      <FilterJobs />
-
-      <ClearList />
+      <FilterJobs
+        ClearSelected={ClearSelected}
+        removeTheSelectedJobs={removeTheSelectedJobs}
+        selected={selected}
+      />
     </div>
   );
 }
 
-function Jobs() {
+function Jobs({ addToSelectedJobs, ClearSelected }) {
   return (
     <div className="box">
       <div className="header-box"></div>
 
       <div className="jobs">
         {jobList.map((job) => (
-          <JobList job={job} key={job.id} />
+          <JobList job={job} key={job} addToSelectedJobs={addToSelectedJobs} />
         ))}
       </div>
     </div>
   );
 }
 
-function JobList({ job }) {
+function FilterJobs({
+  jobList,
+  selected,
+  ClearSelected,
+  removeTheSelectedJobs,
+}) {
+  return (
+    <div className="filtered-Box">
+      {selectedJobs.map((job) => (
+        <>
+          <Box job={job} key={jobList}>
+            <Remove
+              removeTheSelectedJobs={removeTheSelectedJobs}
+              selected={selected}
+            />
+          </Box>
+        </>
+      ))}
+      <button className="filter-btn" onClick={ClearSelected}>
+        Clear
+      </button>
+    </div>
+  );
+}
+
+function Box({ job, children }) {
+  return (
+    <div>
+      <div className="selected-filter">
+        {job}
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function Remove({ selected, removeTheSelectedJobs }) {
+  return (
+    <button className="remove" onClick={() => removeTheSelectedJobs(selected)}>
+      <img src="images/icon-remove.svg" />
+    </button>
+  );
+}
+
+function JobList({ job, addToSelectedJobs }) {
   return (
     <div>
       <div>
@@ -65,12 +129,22 @@ function JobList({ job }) {
           {/* JOB */}
           <div className="technology">
             {job.languages.map((el) => (
-              <button className="technology-btn" key={el}>
+              <button
+                className="technology-btn"
+                value={el}
+                key={el}
+                onClick={() => addToSelectedJobs(el)}
+              >
                 {el}
               </button>
             ))}
             {job.tools.map((tool) => (
-              <button className="tool-btn" key={tool}>
+              <button
+                value={tool}
+                className="tool-btn"
+                key={tool}
+                onClick={() => addToSelectedJobs(tool)}
+              >
                 {tool}
               </button>
             ))}
@@ -80,9 +154,3 @@ function JobList({ job }) {
     </div>
   );
 }
-
-function Box() {}
-
-function FilterJobs() {}
-
-function ClearList() {}

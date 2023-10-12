@@ -27,7 +27,7 @@
     "contract": "Part Time",
     "location": "Remote",
     "languages": ["Python"],
-    "tools": ["React"]
+    "tools": ["React", "Vue"]
   },
   {
     "id": 3,
@@ -57,7 +57,7 @@
     "contract": "Contract",
     "location": "USA Only",
     "languages": ["CSS", "JavaScript"],
-    "tools": []
+    "tools": ["VScode"]
   },
   {
     "id": 5,
@@ -86,7 +86,7 @@
     "postedAt": "2w ago",
     "contract": "Full Time",
     "location": "UK Only",
-    "languages": ["Ruby"],
+    "languages": ["Ruby", "JavaScript"],
     "tools": ["RoR"]
   },
   {
