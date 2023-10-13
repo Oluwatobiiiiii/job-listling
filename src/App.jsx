@@ -1,22 +1,24 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import jobList from "./data.json";
 import "./index.css";
+import PropTypes from "prop-types";
 
+// let selectedJobs = { selected, id: Date.now() };
 let selectedJobs = [];
-
 export default function App() {
   const [selected, showSelectedJobs] = useState(selectedJobs);
 
-  // ADD THE SELCTED FILTER TO THE ARRAY
+  // ADD THE SELECTED FILTER TO THE ARRAY
   function addToSelectedJobs(selected) {
     showSelectedJobs(selectedJobs.push(selected));
     console.log(selectedJobs);
   }
 
   //remove the selected Job
-  function removeTheSelectedJobs(selected) {
-    showSelectedJobs(selectedJobs.pop(selected));
+  function removeTheSelectedJobs(index) {
+    showSelectedJobs(selectedJobs.filter((_, i) => i !== index));
     console.log(selectedJobs);
+    console.log(index);
   }
 
   //REMOVE THE SELECTED FILTER TO THE ARRAY
@@ -27,48 +29,60 @@ export default function App() {
 
   return (
     <div>
-      <Jobs addToSelectedJobs={addToSelectedJobs} selected={selected} />
-
-      <FilterJobs
-        ClearSelected={ClearSelected}
-        removeTheSelectedJobs={removeTheSelectedJobs}
+      <Jobs
+        addToSelectedJobs={addToSelectedJobs}
         selected={selected}
+        selectedJobs={selectedJobs}
       />
+
+      {selectedJobs.length > 0 && (
+        <FilterJobs
+          ClearSelected={ClearSelected}
+          selected={selected}
+          removeTheSelectedJobs={removeTheSelectedJobs}
+          selectedJobs={selectedJobs}
+        />
+      )}
     </div>
   );
 }
 
-function Jobs({ addToSelectedJobs, ClearSelected }) {
+function Jobs({ addToSelectedJobs }) {
   return (
     <div className="box">
       <div className="header-box"></div>
 
       <div className="jobs">
         {jobList.map((job) => (
-          <JobList job={job} key={job} addToSelectedJobs={addToSelectedJobs} />
+          <JobList
+            job={job}
+            key={job.id}
+            addToSelectedJobs={addToSelectedJobs}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-function FilterJobs({
-  jobList,
-  selected,
-  ClearSelected,
-  removeTheSelectedJobs,
-}) {
+Jobs.propTypes = {
+  addToSelectedJobs: PropTypes.func.isRequired,
+};
+
+function FilterJobs({ ClearSelected, selectedJobs, removeTheSelectedJobs }) {
   return (
     <div className="filtered-Box">
-      {selectedJobs.map((job) => (
-        <>
-          <Box job={job} key={jobList}>
+      {selectedJobs.map((job, index) => (
+        <React.Fragment key={index}>
+          <Box job={job} key={index}>
             <Remove
+              key={index}
+              job={job}
+              index={index}
               removeTheSelectedJobs={removeTheSelectedJobs}
-              selected={selected}
             />
           </Box>
-        </>
+        </React.Fragment>
       ))}
       <button className="filter-btn" onClick={ClearSelected}>
         Clear
@@ -76,6 +90,12 @@ function FilterJobs({
     </div>
   );
 }
+
+FilterJobs.propTypes = {
+  ClearSelected: PropTypes.func.isRequired,
+  removeTheSelectedJobs: PropTypes.func.isRequired,
+  selectedJobs: PropTypes.array.isRequired,
+};
 
 function Box({ job, children }) {
   return (
@@ -88,13 +108,27 @@ function Box({ job, children }) {
   );
 }
 
-function Remove({ selected, removeTheSelectedJobs }) {
+Box.propTypes = {
+  job: PropTypes.string.isRequired,
+  children: PropTypes.object.isRequired,
+};
+
+function Remove({ removeTheSelectedJobs, index }) {
   return (
-    <button className="remove" onClick={() => removeTheSelectedJobs(selected)}>
+    <button
+      className="remove"
+      onClick={() => removeTheSelectedJobs(index)}
+      key={Date.now()}
+    >
       <img src="images/icon-remove.svg" />
     </button>
   );
 }
+
+Remove.propTypes = {
+  removeTheSelectedJobs: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+};
 
 function JobList({ job, addToSelectedJobs }) {
   return (
@@ -128,6 +162,14 @@ function JobList({ job, addToSelectedJobs }) {
 
           {/* JOB */}
           <div className="technology">
+            <button
+              value={job.role}
+              key={job.id}
+              className="job-role"
+              onClick={() => addToSelectedJobs(job.role)}
+            >
+              {job.role}
+            </button>
             {job.languages.map((el) => (
               <button
                 className="technology-btn"
@@ -154,3 +196,8 @@ function JobList({ job, addToSelectedJobs }) {
     </div>
   );
 }
+
+JobList.propTypes = {
+  job: PropTypes.object.isRequired,
+  addToSelectedJobs: PropTypes.func.isRequired,
+};
