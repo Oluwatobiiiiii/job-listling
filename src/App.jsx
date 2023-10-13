@@ -3,44 +3,35 @@ import jobList from "./data.json";
 import "./index.css";
 import PropTypes from "prop-types";
 
-// let selectedJobs = { selected, id: Date.now() };
-let selectedJobs = [];
 export default function App() {
-  const [selected, showSelectedJobs] = useState(selectedJobs);
+  const [selected, showSelectedJobs] = useState([]);
 
   // ADD THE SELECTED FILTER TO THE ARRAY
-  function addToSelectedJobs(selected) {
-    showSelectedJobs(selectedJobs.push(selected));
-    console.log(selectedJobs);
+  function addToSelectedJobs(selectedValue) {
+    showSelectedJobs((prev) => {
+      return [...prev, selectedValue];
+    });
   }
 
   //remove the selected Job
-  function removeTheSelectedJobs(index) {
-    showSelectedJobs(selectedJobs.filter((_, i) => i !== index));
-    console.log(selectedJobs);
-    console.log(index);
+  function removeTheSelectedJobs(value) {
+    showSelectedJobs(selected.filter((skillValue) => skillValue !== value));
   }
 
   //REMOVE THE SELECTED FILTER TO THE ARRAY
   function ClearSelected() {
-    showSelectedJobs((selectedJobs = []));
-    console.log(selectedJobs);
+    showSelectedJobs([]);
   }
 
   return (
     <div>
-      <Jobs
-        addToSelectedJobs={addToSelectedJobs}
-        selected={selected}
-        selectedJobs={selectedJobs}
-      />
+      <Jobs addToSelectedJobs={addToSelectedJobs} selected={selected} />
 
-      {selectedJobs.length > 0 && (
+      {selected.length > 0 && (
         <FilterJobs
           ClearSelected={ClearSelected}
           selected={selected}
           removeTheSelectedJobs={removeTheSelectedJobs}
-          selectedJobs={selectedJobs}
         />
       )}
     </div>
@@ -69,16 +60,16 @@ Jobs.propTypes = {
   addToSelectedJobs: PropTypes.func.isRequired,
 };
 
-function FilterJobs({ ClearSelected, selectedJobs, removeTheSelectedJobs }) {
+function FilterJobs({ ClearSelected, selected, removeTheSelectedJobs }) {
   return (
     <div className="filtered-Box">
-      {selectedJobs.map((job, index) => (
+      {selected.map((job, index) => (
         <React.Fragment key={index}>
           <Box job={job} key={index}>
             <Remove
               key={index}
               job={job}
-              index={index}
+              value={job}
               removeTheSelectedJobs={removeTheSelectedJobs}
             />
           </Box>
@@ -92,9 +83,9 @@ function FilterJobs({ ClearSelected, selectedJobs, removeTheSelectedJobs }) {
 }
 
 FilterJobs.propTypes = {
+  selected: PropTypes.array.isRequired,
   ClearSelected: PropTypes.func.isRequired,
   removeTheSelectedJobs: PropTypes.func.isRequired,
-  selectedJobs: PropTypes.array.isRequired,
 };
 
 function Box({ job, children }) {
@@ -113,12 +104,12 @@ Box.propTypes = {
   children: PropTypes.object.isRequired,
 };
 
-function Remove({ removeTheSelectedJobs, index }) {
+function Remove({ removeTheSelectedJobs, value }) {
   return (
     <button
       className="remove"
-      onClick={() => removeTheSelectedJobs(index)}
-      key={Date.now()}
+      onClick={() => removeTheSelectedJobs(value)}
+      key={value}
     >
       <img src="images/icon-remove.svg" />
     </button>
@@ -127,7 +118,7 @@ function Remove({ removeTheSelectedJobs, index }) {
 
 Remove.propTypes = {
   removeTheSelectedJobs: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 function JobList({ job, addToSelectedJobs }) {
