@@ -214,3 +214,79 @@ body {
   text-align: center;
   color: var(---DesaturatedDarkCyan--);
 }
+
+@media screen and (max-width: 768px) {
+  .filtered-Box {
+    width: auto;
+    flex-wrap: wrap;
+  }
+
+  .jobs {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .company {
+    width: auto;
+  }
+
+  .technology {
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .header-box {
+    background-image: url(/images/bg-header-mobile.svg);
+    background-repeat: no-repeat;
+  }
+
+  .filtered-Box {
+    width: 280px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: fit-content;
+    padding: 3px 3px 3px 3px;
+    top: 3%;
+    left: 10%;
+    right: 10%;
+  }
+
+  .jobs {
+    flex-direction: column;
+    padding-bottom: 10px;
+  }
+
+  .company {
+    width: auto;
+    height: auto;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
+    gap: 30px;
+    padding: 3px 3px 3px 3px;
+  }
+
+  .job-details {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .company-image {
+    position: relative;
+    top: 0%;
+    right: 25%;
+  }
+
+  .technology {
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 912px) {
+  .filtered-Box {
+    width: auto;
+    flex-wrap: wrap;
+    height: max-content;
+  }
+}
