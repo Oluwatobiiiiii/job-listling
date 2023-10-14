@@ -6,7 +6,6 @@ export default function Jobs({ addToSelectedJobs }) {
   return (
     <div className="box">
       <div className="header-box"></div>
-
       <div className="jobs">
         {jobList.map((job) => (
           <JobList

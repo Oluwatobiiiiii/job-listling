@@ -203,3 +203,14 @@ body {
   cursor: pointer;
   border: none;
 }
+
+.me {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.coding-ninja {
+  text-decoration: none;
+  text-align: center;
+  color: var(---DesaturatedDarkCyan--);
+}
